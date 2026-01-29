@@ -11,16 +11,89 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* 这里补充了针对游戏卡片增强的样式，你也可以剪切到 style.css 中 */
+        .game-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            height: 100%;
+            backdrop-filter: blur(5px);
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: #7fc8f8;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1024 / 500; /* 严格符合 Google Play 商店图比例 */
+            overflow: hidden;
+        }
+
+        .card-banner {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .game-card:hover .card-banner {
+            transform: scale(1.08);
+        }
+
+        .card-overlay-icon {
+            position: absolute;
+            bottom: -25px;
+            right: 20px;
+            z-index: 2;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px; /* Google Play 风格圆角 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.2);
+            background: #fff;
+        }
+
+        .card-body-custom {
+            padding: 2.5rem 1.5rem 1.8rem;
+        }
+
+        .btn-game {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 50px;
+            padding: 8px 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-game:hover {
+            background: #fff;
+            color: #0a192f;
+        }
+    </style>
 </head>
 <body>
 
     <div class="parallax-universe" id="parallaxContainer">
         <div class="layer layer-far" data-depth="0.1"></div>
-        
         <div class="layer layer-mid" data-depth="0.3">
             <div class="game-asset-deco" style="background-image: url('xxdcb_top.jpg');"></div>
         </div>
-
         <div class="layer layer-svg" data-depth="0.5">
             <svg viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M400 250 C420 220, 460 220, 480 250 C510 220, 550 220, 570 250" stroke="#7fc8f8" stroke-width="2" opacity="0.3"/>
@@ -28,7 +101,6 @@
                 <rect x="200" y="700" width="80" height="80" rx="20" stroke="#97e5d7" stroke-width="2" opacity="0.2" transform="rotate(15)"/>
             </svg>
         </div>
-
         <div class="layer layer-near" data-depth="0.8"></div>
     </div>
 
@@ -38,10 +110,10 @@
                 <div class="logo-box me-2">YG</div>
                 <span class="brand-text">YUNSHAN GAMES</span>
             </a>
-            <div class="ms-auto d-none d-lg-block">
-                <ul class="navbar-nav fw-bold">
-                    <li class="nav-item"><a class="nav-link" href="#games">GAMES</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#vision">VISION</a></li>
+            <div class="ms-auto">
+                <ul class="navbar-nav fw-bold flex-row">
+                    <li class="nav-item"><a class="nav-link px-3" href="#games">GAMES</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#vision">VISION</a></li>
                 </ul>
             </div>
         </div>
@@ -54,38 +126,38 @@
                     <div class="slide-inner" style="background-image: url('cf_top.jpg');">
                         <div class="container text-white">
                             <div class="glass-card" data-aos="zoom-out-up">
-                                <img src="cf_icon.png" class="mini-icon" alt="">
-                                <h1 class="display-2 fw-black">CITY FIGHTRER</h1>
+                                <img src="cf_icon.jpg" class="mini-icon" alt="">
+                                <h1 class="display-3 fw-black">CITY FIGHTER</h1>
                                 <p class="opacity-75">Sky Supremacy. Modern Warfare. Endless Action.</p>
-                                <button class="btn btn-premium">Google Play ↗</button>
+                                <button class="btn btn-premium">Get it on Google Play ↗</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
             <div class="swiper-pagination"></div>
         </div>
     </section>
 
-    <section class="stats-section py-5" id="vision">
+    <section class="stats-section py-5 mx-3 mx-md-5" id="vision">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md-4" data-aos="fade-up">
                     <div class="stat-item">
                         <h2 class="display-4 fw-black">10M+</h2>
-                        <p class="text-muted">Global Downloads</p>
+                        <p class="text-muted text-uppercase small">Global Downloads</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-item border-start border-end">
+                    <div class="stat-item border-md-start border-md-end">
                         <h2 class="display-4 fw-black">4.8</h2>
-                        <p class="text-muted">Avg. Rating</p>
+                        <p class="text-muted text-uppercase small">Avg. Rating</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-item">
                         <h2 class="display-4 fw-black">50+</h2>
-                        <p class="text-muted">Countries Reached</p>
+                        <p class="text-muted text-uppercase small">Countries Reached</p>
                     </div>
                 </div>
             </div>
@@ -94,16 +166,68 @@
 
     <section class="py-5" id="games">
         <div class="container">
-            <div class="section-header mb-5">
-                <h2 class="fw-black">OUR PROJECTS</h2>
+            <div class="section-header mb-5" data-aos="fade-right">
+                <h2 class="fw-black text-white">OUR PROJECTS</h2>
+                <div class="title-line"></div>
             </div>
-            <div class="row g-4">
+            
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="game-card">
+                        <div class="card-image-wrap">
+                            <img src="cf_top.jpg" class="card-banner" alt="City Fighter">
+                            <div class="card-overlay-icon">
+                                <img src="cf_icon.jpg" class="card-icon" alt="Icon">
+                            </div>
+                        </div>
+                        <div class="card-body-custom">
+                            <h3 class="h4 fw-bold text-white">CITY FIGHTER</h3>
+                            <p class="text-white-50 mb-4">顶级空战体验，现代战争一触即发。</p>
+                            <a href="#" class="btn-game">了解更多</a>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="game-card">
+                        <div class="card-image-wrap">
+                            <img src="xxdcb_top.jpg" class="card-banner" alt="Tiny Castle">
+                            <div class="card-overlay-icon">
+                                <img src="xxdcb_icon.jpg" class="card-icon" alt="Icon">
+                            </div>
+                        </div>
+                        <div class="card-body-custom">
+                            <h3 class="h4 fw-bold text-white">小小大城堡</h3>
+                            <p class="text-white-50 mb-4">趣味合成，打造属于你的梦幻王国。</p>
+                            <a href="#" class="btn-game">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="game-card">
+                        <div class="card-image-wrap">
+                            <img src="cz_top.jpg" class="card-banner" alt="Town Guard">
+                            <div class="card-overlay-icon">
+                                <img src="cz_icon.jpg" class="card-icon" alt="Icon">
+                            </div>
+                        </div>
+                        <div class="card-body-custom">
+                            <h3 class="h4 fw-bold text-white">城镇守卫</h3>
+                            <p class="text-white-50 mb-4">策略塔防，守护城镇最后的防线。</p>
+                            <a href="#" class="btn-game">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="py-5 bg-dark text-white text-center mt-5">
-        <p>© 2026 Yunshan Games. All Rights Reserved.</p>
+    <footer class="py-5 text-white text-center mt-5">
+        <div class="container">
+            <div class="logo-box mx-auto mb-3">YG</div>
+            <p class="opacity-50">© 2026 Yunshan Games. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,45 +1,55 @@
+// 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    
-    AOS.init({ duration: 1000, once: true });
-
-    // 1. Swiper 设置
-    new Swiper('.mainSwiper', {
-        loop: true,
-        parallax: true,
-        speed: 1200,
-        autoplay: { delay: 6000 },
-        pagination: { el: '.swiper-pagination', clickable: true }
+    // 1. 初始化AOS动画
+    AOS.init({
+        duration: 1000, // 动画持续时间
+        easing: 'ease-in-out', // 动画缓动效果
+        once: true, // 只执行一次动画
+        mirror: false // 滚动回滚时不重复执行
     });
 
-    // 2. 复合视差引擎
-    const layers = document.querySelectorAll('.layer');
-    const container = document.getElementById('parallaxContainer');
+    // 2. 初始化Swiper轮播
+    const swiper = new Swiper('.mainSwiper', {
+        loop: true, // 循环播放
+        pagination: {
+            el: '.swiper-pagination', // 分页器元素
+            clickable: true, // 分页器可点击
+        },
+        autoplay: {
+            delay: 5000, // 自动播放间隔
+            disableOnInteraction: false // 交互后不停止自动播放
+        },
+        effect: 'fade', // 渐变切换效果
+        fadeEffect: {
+            crossFade: true
+        }
+    });
 
-    // A. 鼠标跟随逻辑
-    window.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5);
-        const y = (e.clientY / window.innerHeight - 0.5);
+    // 3. 实现视差滚动效果
+    const parallaxContainer = document.getElementById('parallaxContainer');
+    const layers = parallaxContainer.querySelectorAll('.layer');
 
+    // 监听滚动事件
+    window.addEventListener('scroll', function() {
+        const scrollY = window.pageYOffset;
+        
+        // 遍历所有视差层，根据depth计算偏移
         layers.forEach(layer => {
-            const depth = layer.getAttribute('data-depth');
-            const moveX = x * (depth * 100);
-            const moveY = y * (depth * 100);
-            // 保持原本的滚动位移，叠加鼠标位移
-            layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+            const depth = parseFloat(layer.getAttribute('data-depth'));
+            const movement = scrollY * depth; // 偏移量 = 滚动距离 * 深度值
+            layer.style.transform = `translateY(${movement}px)`;
         });
     });
 
-    // B. 滚动视差增强
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        // 导航栏联动
-        const nav = document.querySelector('.custom-nav');
-        if (scrolled > 80) {
-            nav.style.background = "rgba(255,255,255,0.95)";
-            nav.style.padding = "10px 0";
+    // 4. 导航栏滚动效果
+    const nav = document.querySelector('.custom-nav');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            nav.style.background = 'rgba(10, 25, 47, 0.95)';
+            nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.2)';
         } else {
-            nav.style.background = "rgba(255,255,255,0.7)";
-            nav.style.padding = "20px 0";
+            nav.style.background = 'rgba(10, 25, 47, 0.8)';
+            nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         }
     });
 });

@@ -1,91 +1,219 @@
-:root {
-    --primary: #3d5afe;
-    --accent: #f7a8b8;
-    --glass-blur: blur(25px);
+/* 全局样式重置与基础设置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background: #fdfdfd;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #1a1a1a;
     overflow-x: hidden;
+    position: relative;
 }
 
-/* 视差宇宙层级 */
+/* 视差背景核心样式 */
 .parallax-universe {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 置于所有内容下方 */
     overflow: hidden;
-    perspective: 1500px;
 }
 
 .layer {
     position: absolute;
-    width: 120%; height: 120%; /* 预留给视差移动的余量 */
-    top: -10%; left: -10%;
-    will-change: transform;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
 }
 
-/* 远层：蓝紫色呼吸渐变 */
 .layer-far {
-    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 50%, #f5f0ff 100%);
-    background-size: 400% 400%;
-    animation: flow 15s ease infinite;
+    background: linear-gradient(120deg, #0a192f 0%, #112240 100%);
+    opacity: 0.9;
 }
 
-/* 中层：半透明装饰图 (xxdcb_top.jpg) */
-.game-asset-deco {
-    width: 600px; height: 300px;
+.layer-mid .game-asset-deco {
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
-    position: absolute;
-    right: 5%; top: 20%;
     opacity: 0.15;
-    filter: grayscale(100%) blur(5px);
-    border-radius: 50px;
-    transform: rotate(-10deg);
 }
 
-/* 近层：旋转的几何花纹 */
+.layer-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.layer-svg svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .layer-near {
-    background-image: radial-gradient(var(--accent) 1px, transparent 0);
-    background-size: 60px 60px;
-    opacity: 0.2;
-    mask-image: linear-gradient(to bottom, black, transparent);
+    background: radial-gradient(circle at 70% 30%, rgba(127, 200, 248, 0.1) 0%, rgba(15, 32, 63, 0) 60%);
 }
 
-/* 核心组件：磨砂玻璃卡片 */
+/* 导航栏样式 */
+.custom-nav {
+    background: rgba(10, 25, 47, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-box {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #7fc8f8, #97e5d7);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a192f;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.brand-text {
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #fff !important;
+    margin-left: 2rem;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #7fc8f8;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* 英雄轮播样式 */
+.hero-slider {
+    padding-top: 80px; /* 适配固定导航栏 */
+}
+
+.swiper {
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+.slide-inner {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
 .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: var(--glass-blur);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 60px;
-    border-radius: 40px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+    background: rgba(10, 25, 47, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 600px;
 }
 
 .mini-icon {
-    width: 60px; height: 60px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
 }
 
-/* 按钮高级动效 */
 .btn-premium {
-    background: #000; color: #fff;
-    padding: 15px 40px; border-radius: 100px;
-    font-weight: 700; transition: all 0.4s;
-}
-.btn-premium:hover {
-    transform: translateY(-5px) scale(1.05);
-    background: var(--primary);
-    box-shadow: 0 15px 30px rgba(61, 90, 254, 0.4);
+    background: linear-gradient(45deg, #7fc8f8, #f7a8b8);
+    color: #0a192f;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 8px;
+    border: none;
+    transition: transform 0.3s ease;
 }
 
-@keyframes flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.btn-premium:hover {
+    transform: translateY(-3px);
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+    background: #7fc8f8;
+}
+
+/* 数据统计区样式 */
+.stats-section {
+    background: rgba(10, 25, 47, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 2rem 0;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item {
+    padding: 2rem 1rem;
+    color: #fff;
+}
+
+.stat-item h2 {
+    background: linear-gradient(45deg, #7fc8f8, #97e5d7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-item p {
+    letter-spacing: 1px;
+}
+
+/* 游戏项目区样式 */
+#games {
+    color: #fff;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(45deg, #7fc8f8, #f7a8b8);
+    border-radius: 3px;
+}
+
+/* 页脚样式 */
+footer {
+    background: #0a192f !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
