@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>休闲游戏公司官网 - 组合视差背景</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 300vh;
+      font-family: Arial, sans-serif;
+    }
+    /* 组合视差容器：全屏+3D透视+鼠标跟随基础 */
+    .combo-parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      perspective: 1200px;
+      z-index: -1;
+      cursor: default;
+    }
+    .combo-parallax-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.1s ease-out; /* 鼠标跟随的顺滑过渡 */
+    }
+    /* 远层：动态流动渐变（呼吸感） */
+    .combo-layer-far {
+      background: linear-gradient(45deg, #f0f7ff, #e6f2ff, #f5f0ff);
+      background-size: 200% 200%;
+      animation: gradient-flow 15s ease infinite;
+      transform: translateZ(0);
+    }
+    /* 中层：SVG游戏化小图标（中等视差） */
+    .combo-layer-mid {
+      transform: translateZ(100px);
+      opacity: 0.8;
+    }
+    /* 近层：CSS几何+旋转动画（明显视差） */
+    .combo-layer-near {
+      background-image: 
+        circle(40px at 30% 20%, #ffd966 0%, transparent 100%),
+        circle(30px at 70% 60%, #97e5d7 0%, transparent 100%),
+        circle(25px at 90% 40%, #f7a8b8 0%, transparent 100%),
+        circle(35px at 10% 70%, #c8a2c8 0%, transparent 100%);
+      animation: rotate-geo 30s linear infinite;
+      transform: translateZ(200px);
+    }
+    /* 动态渐变流动动画 */
+    @keyframes gradient-flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* 近层几何旋转动画 */
+    @keyframes rotate-geo {
+      0% { transform: translateZ(200px) rotate(0deg); }
+      100% { transform: translateZ(200px) rotate(360deg); }
+    }
+    /* SVG自适应 */
+    svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    /* 官网首屏内容 */
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #2d68c4;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero-section h1 {
+      font-size: 4.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .hero-section p {
+      font-size: 1.3rem;
+      max-width: 900px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- 组合视差背景容器 -->
+  <div class="combo-parallax-bg" id="parallaxContainer">
+    <div class="combo-parallax-layer combo-layer-far"></div>
+    <!-- 中层：SVG游戏化小图标（云朵、爱心、游戏手柄简化版） -->
+    <div class="combo-parallax-layer combo-layer-mid">
+      <svg viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 小云朵（休闲感） -->
+        <path d="M400 250 C420 220, 460 220, 480 250 C510 220, 550 220, 570 250 C590 220, 630 220, 650 250 L650 280 C630 310, 590 320, 570 300 C550 320, 510 310, 480 300 C460 320, 420 310, 400 280 Z" fill="#7fc8f8" opacity="0.7"/>
+        <path d="M1300 400 C1320 370, 1360 370, 1380 400 C1410 370, 1450 370, 1470 400 C1490 370, 1530 370, 1550 400 L1550 430 C1530 460, 1490 470, 1470 450 C1450 470, 1410 460, 1380 450 C1360 470, 1320 460, 1300 430 Z" fill="#7fc8f8" opacity="0.7"/>
+        <!-- 小爱心（活泼感） -->
+        <path d="M800 500 C800 470, 780 450, 760 450 C740 450, 720 470, 720 500 C720 530, 760 580, 800 620 C840 580, 880 530, 880 500 C880 470, 860 450, 840 450 C820 450, 800 470, 800 500 Z" fill="#f7a8b8" opacity="0.8"/>
+        <path d="M1600 700 C1600 670, 1580 650, 1560 650 C1540 650, 1520 670, 1520 700 C1520 730, 1560 780, 1600 820 C1640 780, 1680 730, 1680 700 C1680 670, 1660 650, 1640 650 C1620 650, 1600 670, 1600 700 Z" fill="#f7a8b8" opacity="0.8"/>
+        <!-- 游戏手柄简化版（游戏属性） -->
+        <rect x="1000" y="300" width="120" height="80" rx="20" ry="20" fill="#97e5d7" opacity="0.8"/>
+        <circle cx="980" cy="320" r="15" fill="#97e5d7" opacity="0.8"/>
+        <circle cx="1140" cy="320" r="15" fill="#97e5d7" opacity="0.8"/>
+        <circle cx="1020" cy="360" r="10" fill="#66d3b8" opacity="0.8"/>
+        <circle cx="1100" cy="360" r="10" fill="#66d3b8" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="combo-parallax-layer combo-layer-near"></div>
+  </div>
+  <!-- 官网首屏核心内容 -->
+  <div class="hero-section">
+    <h1>XX休闲游戏</h1>
+    <p>谷歌游戏商店官方推荐 · 随时随地，轻松畅玩<br>多款休闲小游戏，解锁你的快乐时光</p>
+  </div>
+
+  <!-- 鼠标跟随视差JS（可选，删除则仅保留滚动视差） -->
+  <script>
+    const parallaxContainer = document.getElementById('parallaxContainer');
+    const layers = document.querySelectorAll('.combo-parallax-layer');
+    // 鼠标移动时触发视差
+    parallaxContainer.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth - 0.5; // -0.5 ~ 0.5
+      const y = e.clientY / window.innerHeight - 0.5;
+      // 为每层设置不同的偏移量，实现鼠标跟随视差
+      layers.forEach((layer, index) => {
+        const zIndex = parseInt(layer.style.transform.match(/translateZ\((\d+)px\)/)?.[1] || 0);
+        const moveX = x * zIndex * 0.3; // 水平偏移系数
+        const moveY = y * zIndex * 0.3; // 垂直偏移系数
+        layer.style.transform = `translateZ(${zIndex}px) translateX(${moveX}px) translateY(${moveY}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
